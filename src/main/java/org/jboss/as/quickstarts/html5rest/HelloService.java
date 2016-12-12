@@ -36,7 +36,7 @@ public class HelloService {
                            currentLocale.toString() +
                            ")===:\n");
 
-        messages = ResourceBundle.getBundle("MessageBundle", currentLocale);
+        messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
         return "Hello " + name + "in langauge of:" + lang + "!";
     }
 
