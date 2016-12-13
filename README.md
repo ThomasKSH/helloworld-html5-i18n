@@ -7,8 +7,7 @@ Yu Shao
 helloworld-html5: HTML5 and REST Hello World Info
 
 https://github.com/xcoulon/wildfly-quickstart/tree/master/helloworld-html5
-
-
+<pre>
 whoami
 printenv
 mvn clean
@@ -32,4 +31,4 @@ find . -type f -not -path "./target/*" -name 'zanata.xml' \
   -execdir echo "=== Git commit ...\n" \; \
   -execdir git commit -m "$BUILD_TAG" \; \
   -execdir echo "=== Finished commit prepration.\n" \; \
-
+  </pre>
