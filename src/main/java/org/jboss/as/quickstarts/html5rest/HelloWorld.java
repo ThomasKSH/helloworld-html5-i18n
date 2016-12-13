@@ -39,7 +39,7 @@ public class HelloWorld {
     @Path("/json/{name}/{lang}/{country}")
     @Produces("application/json")
     public String getHelloWorldJSON(@PathParam("name") String name, @PathParam("lang") String lang, @PathParam("country") String country) {
-        System.out.printldn("name: " + name + " language:" + lang + "country" + country);
+        System.out.println("name: " + name + " language:" + lang + "country" + country);
         return "{\"result\":\"" + helloService.createHelloMessage(name,lang,country) + "\"}";
     }
 
