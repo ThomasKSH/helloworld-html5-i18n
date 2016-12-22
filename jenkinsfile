@@ -1,0 +1,39 @@
+node {
+   def mvnHome
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+      git 'https://github.com/yu-shao-gm/helloworld-html5-i18n.git'
+      // Get the Maven tool.
+      // ** NOTE: This 'M3' Maven tool must be configured
+      // **       in the global configuration.           
+      mvnHome = tool("mvn339")
+
+   }
+   stage('Pulling Translation From Zanata') {
+      // Run the maven build
+      if (isUnix()) {
+         sh "find . -type f -not -path '*/target/*' -name 'zanata.xml' -execdir pwd \\; -execdir ls \\; -execdir echo 'Running zanata-cli -B stats ' \\; -execdir zanata-cli -B stats \\;  -execdir echo 'Running zanata-cli -B push' \\;  -execdir zanata-cli -B push \\;  -execdir echo 'Running zanata-cli -B pull' \\; -execdir zanata-cli -B pull \\;"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
+   stage('Build') {
+      // Run the maven build
+      if (isUnix()) {
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
+   stage('Pushing Zanata Translation to Git') {
+      // Run the maven build
+      if (isUnix()) {
+         sh "find . -type f -not -path '*/target/*' -name 'zanata.xml' -execdir echo '=== Commiting new translation...' \\; -execdir pwd \\; -execdir ls \\; -execdir echo '=== Git add...' \\; -execdir git add . \\; -execdir echo '=== Git commit ...' \\; -execdir git commit -m \"$BUILD_TAG\" \\; -execdir echo '=== Finished commit prepration.' \\;"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
+   stage('Results') {
+      archive 'target/*.jar'
+   }
+}
