@@ -6,8 +6,8 @@ node {
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
-      mvnHome = tool("mvn339")
-
+      mvnHome = tool("mvn")
+      sh "export PATH=$ZANATA_CLI_HOME/bin:$PATH"
    }
    stage('Pulling Translation From Zanata') {
       // Run the maven build
